@@ -1,5 +1,5 @@
 import unittest
-from e3_7 import GeometricCenter
+from find_geometric_center import GeometricCenter
 
 class TestPoint(unittest.TestCase):
 

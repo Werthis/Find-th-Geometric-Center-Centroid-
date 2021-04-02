@@ -46,7 +46,7 @@ class GuiGeometric():
             self._numbers_from_entry.append(self.number)
 
 
-        button_take_numbers = tk.Button(self.window, text='Submit', command=self.take_values)
+        button_take_numbers = tk.Button(self.window, text='Add point', command=self.take_values)
         button_take_numbers.pack()
 
         label_print = tk.Label(self.window, textvariable = self.coordinates_info, font=('arial', 12))
@@ -55,15 +55,29 @@ class GuiGeometric():
         self.listbox_of_coordinates = tk.Listbox(self.window, height=5)
         self.listbox_of_coordinates.pack()
 
+        button_send_all_to_backend = tk.Button(self.window, text='Submit', command=self.backend_communication)
+        button_send_all_to_backend.pack()
+
+
     def take_values(self):
         for i in self._numbers_from_entry:
-            self.coordinates_list.append(i.get())
+            self.coordinates_list.append(int(i.get()))
             i.set('')
-        self.list_of_points.append(str(self.coordinates_list))
+        self.list_of_points += self.coordinates_list
         self.coordinates_info.set(f'new point is {self.coordinates_list}')
         print(self.list_of_points)
         self.listbox_of_coordinates.insert(0, self.coordinates_list)
         self.coordinates_list.clear()
+        return self.list_of_points
+
+    def backend_communication(self):
+        print(self.list_of_points)
+        number_of_points = (len(self.list_of_points)/self.number_of_dimentions)
+
+        list_for_backend = self._backend.gui_communication(all_points = self.list_of_points, number_of_dimentions = self.number_of_dimentions, number_of_points= number_of_points)
+        print(list_for_backend)
+
+        return list_for_backend
 
     def start(self):
         self.window.mainloop()

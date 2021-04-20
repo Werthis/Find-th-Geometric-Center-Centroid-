@@ -14,7 +14,6 @@ class MainWindow():
 
         self.dimentions_number = tk.StringVar()
 
-
         label_dimentions_question = tk.Label(self.root, text='Write number of dimentions', font=('arial', 12))
         entry_number_of_dimentions = tk.Entry(self.root, textvariable=self.dimentions_number, font=('arial', 12))
         button_confirm_dimentions = tk.Button(self.root, text='confirm', font=('arial', 12), command = self.open_new_window)
@@ -29,6 +28,7 @@ class MainWindow():
     def open_new_window(self):
         self.get_number_of_dimentions()
         self.program = SecondWindow(self.number_of_dimentions)
+        # self.
 
     def start(self):
         self.root.mainloop()

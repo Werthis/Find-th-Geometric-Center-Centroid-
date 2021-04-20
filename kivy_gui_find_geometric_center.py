@@ -2,6 +2,7 @@ import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -9,9 +10,41 @@ from kivy.properties import StringProperty, ObjectProperty
 
 import find_geometric_center as find_geo
 
-class GeometricCenterGrid(Widget):
-    arabic_number = ObjectProperty(None)
+class MyLabel(Label):
+    pass
+
+class MyButton(Button):
+    pass
+
+class MyTextInput(TextInput):
+    pass
+
+class Invoice(Screen):
+
+    dimentions_number = ObjectProperty(None)
     geometric_number = StringProperty()
+
+    def __init__(self, **kwargs):
+        super(Invoice, self).__init__(**kwargs)
+
+    def get_number_of_dimentions(self):
+        self.number_of_domensions = self.dimentions_number.text
+        return self.number_of_domensions
+
+    def add(self):
+        self.get_number_of_dimentions()
+        try:
+            arr = ({'Item1': 5000},{'Item2': 1000})
+            layout = self.ids['dimensions']
+
+            for i in range(int(self.number_of_domensions)):
+                _text_input = TextInput(text=str(i))
+                layout.add_widget(_text_input)
+        except:
+            pass
+
+
+class GeometricCenterGrid(Widget):
 
     def __init__(self, backend, *args, **kwargs):
         super(GeometricCenterGrid, self).__init__(*args, **kwargs)
@@ -19,7 +52,7 @@ class GeometricCenterGrid(Widget):
         self.geometric_number = 'Here comes your number!'
 
     def get_number_from_user(self):
-        self.number_to_convert = self.arabic_number.text
+        self.number_of_dimensions = self.dimentions_number.text
         return self.number_to_convert
     
     def request(self):
@@ -35,7 +68,8 @@ class GeometricCenterApp(App):
         self._backend = backend
 
     def build(self):
-        return GeometricCenterGrid(self._backend)
+        return Invoice()
+        # return GeometricCenterGrid(self._backend)
 
     def start_app(self):
         GeometricCenterApp(self._backend).run()                

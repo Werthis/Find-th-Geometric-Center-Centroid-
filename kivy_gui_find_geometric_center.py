@@ -22,44 +22,59 @@ class MyTextInput(TextInput):
 class Invoice(Screen):
 
     dimentions_number = ObjectProperty(None)
-    geometric_number = StringProperty()
+    one_point_numbers = StringProperty()
+    geometric_center = StringProperty()
 
-    def __init__(self, **kwargs):
-        super(Invoice, self).__init__(**kwargs)
+    def __init__(self, backend, *args, **kwargs):
+        super(Invoice, self).__init__(*args, **kwargs)
+        self._backend = backend
+        self._list_of_textinputs = []
+        self._list_of_points = []
+        self._list_of_all_coordinates = []
+        self.number_of_points = 0
 
     def get_number_of_dimentions(self):
-        self.number_of_domensions = self.dimentions_number.text
-        return self.number_of_domensions
+        self.number_of_dimentions = self.dimentions_number.text
+        return self.number_of_dimentions
 
     def add(self):
         self.get_number_of_dimentions()
-        try:
-            arr = ({'Item1': 5000},{'Item2': 1000})
+        try:        
+            self.number_of_dimentions = int(self.number_of_dimentions)
             layout = self.ids['dimensions']
-
-            for i in range(int(self.number_of_domensions)):
-                _text_input = TextInput(text=str(i))
+            for i in range(self.number_of_dimentions):
+                _text_input = TextInput(text='', multiline=False)
+                self._list_of_textinputs.append(_text_input)
                 layout.add_widget(_text_input)
         except:
             pass
+        button_1 = self.ids['button_1']
+        return self.number_of_dimentions
 
+    def get_coordinates(self):
+        _list = []
+        for i in self._list_of_textinputs:
+            coordinate = i.text
+            if coordinate == '':
+                pass
+            else:
+                coordinate = int(coordinate)
+                _list.append(coordinate)
+                self._list_of_all_coordinates.append(coordinate)
+            i.text = ''
+        self._list_of_points.append(_list)
+        self.number_of_points += 1
+        self.one_point_numbers = str(self._list_of_points)
 
-class GeometricCenterGrid(Widget):
+        points_labels = self.ids['points']
+        _point_label = Label(text= str(_list))
+        points_labels.add_widget(_point_label)
 
-    def __init__(self, backend, *args, **kwargs):
-        super(GeometricCenterGrid, self).__init__(*args, **kwargs)
-        self._backend = backend
-        self.geometric_number = 'Here comes your number!'
+        return self.number_of_points, self._list_of_points
 
-    def get_number_from_user(self):
-        self.number_of_dimensions = self.dimentions_number.text
-        return self.number_to_convert
-    
     def request(self):
-        self.get_number_from_user()
-        number_to_convert = self._backend.gui_cumunication(self.number_to_convert)
-        self.geometric_number = str(number_to_convert)
-        self.arabic_number.text = ''
+        self.geometric_center_to_find = self._backend.gui_communication(all_points= self._list_of_all_coordinates, number_of_dimentions= self.number_of_dimentions, number_of_points= float(self.number_of_points))
+        self.geometric_center = 'The geometric center is: ' + str(self.geometric_center_to_find)
 
 class GeometricCenterApp(App):
 
@@ -68,8 +83,7 @@ class GeometricCenterApp(App):
         self._backend = backend
 
     def build(self):
-        return Invoice()
-        # return GeometricCenterGrid(self._backend)
+        return Invoice(self._backend)
 
     def start_app(self):
         GeometricCenterApp(self._backend).run()                

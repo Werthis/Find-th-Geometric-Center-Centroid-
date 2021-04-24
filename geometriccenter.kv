@@ -1,46 +1,40 @@
 <Label>:
-    font_size: 20
-    background_color: 0.3, 0.4, 0.5, 1
-    color: 1, 1, 1, 1
-
-<Button>:
     font_size: 30
-    background_color: 1, 1, 1, 1
     color: 1, 1, 1, 1
-
-<MyLabel>:
-    font_size: 15
-    size_hint_y:None
-    height: 30
-    text_size: self.size
     valign: 'middle'
     canvas.before:
         Color:
-            rgb: .6, .6, .6
+            rgb: 1, 0.1, 1, 1
         Rectangle:
             pos: self.pos
             size: self.size
+
+<Button>:
+    font_size: 30
+    background_color: 1, 0.1, 1, 1
+    color: 1, 1, 1, 0.8
+            
 <TextInput>:
     font_size: 30
     color: 0, 1, 1, 0
-    background_color: 1, 1, 1, 1
+    background_color: (1,1,0,1) if self.focus else (0,0,1,1)
 
 <Invoice>:
 
     dimentions_number: dimentions_number
 
     GridLayout:
-        cols: 1        
+        cols: 1
 
         GridLayout:
-            cols: 1            
+            cols: 1          
 
             GridLayout:
-                cols: 1 
+                cols: 1
 
                 Label:
-                    id: label1
-                    text: 'ENTER DIMENSION NUMBER:'
+                    id: label_1
+                    text: 'How many dimensions do you need?'
                 
                 TextInput:
                     multiline: False
@@ -48,16 +42,17 @@
 
                 Button:
                     id: button_1
-                    text: "Button 1"
+                    text: "Submit"
                     size_hint_x: .05
                     spacing_x: 30
-                    on_press: root.add()    
-                    
-                GridLayout:
-                    id: dimensions
-                    size: root.width, root.height
+                    on_press: root.add(), 
+                    on_release: if len(dimentions_number.text) != 0: button_1.disabled = True
 
-                    cols: 1
+        GridLayout:
+            id: dimensions
+            size: root.width, root.height
+            cols: 1
+
 
         GridLayout:
             cols: 1 
@@ -65,13 +60,26 @@
             GridLayout:
                 cols: 1               
 
-                Button:
-                    id: button_2
-                    text: 'Button 2'
+                GridLayout:
+                    cols: 1
+
+                    Button:
+                        id: button_2
+                        text: 'Add point'
+                        on_press: root.get_coordinates()
+
+                    GridLayout:
+                        id: points
+                        size: root.width, root.height
+                        cols: 10
+
+                    Button:
+                        id: button_3
+                        text: 'Find geometric center'
+                        on_press: root.request()
 
 
-
-
-
-
-
+                    Label:
+                        id: label_2
+                        text: root.geometric_center
+                        font_size: 40

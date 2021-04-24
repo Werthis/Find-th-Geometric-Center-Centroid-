@@ -44,11 +44,11 @@ class GuiGeometric():
 
     def make_new_widgets(self):
         self.get_number_of_dimentions()
-        self.put_two_numbers = tk.Label(
+        self.put_coordinate = tk.Label(
             self.window, 
             text='put coordinates here:', 
             font=('arial', 12))
-        self.put_two_numbers.pack()
+        self.put_coordinate.pack()
 
         for i in range(1, self.number_of_dimentions + 1):
             coordinates_label = tk.Label(

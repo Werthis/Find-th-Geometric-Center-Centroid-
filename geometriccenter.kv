@@ -4,7 +4,7 @@
     valign: 'middle'
     canvas.before:
         Color:
-            rgb: 1, 0.1, 1, 1
+            rgb: 0.8, 0.3, 1, 1
         Rectangle:
             pos: self.pos
             size: self.size
@@ -17,7 +17,7 @@
 <TextInput>:
     font_size: 30
     color: 0, 1, 1, 0
-    background_color: (1,1,0,1) if self.focus else (0,0,1,1)
+    background_color: (0.5, 0.3, 1, 1) if self.focus else (0.8, 0.3, 1, 1)
 
 <Invoice>:
 
@@ -42,10 +42,11 @@
 
                 Button:
                     id: button_1
-                    text: "Submit"
+                    text: root.button_text
                     size_hint_x: .05
                     spacing_x: 30
-                    on_press: root.add(), 
+                    on_press: root.add()
+                    on_release: root.change_button_text('pressed')
                     on_release: if len(dimentions_number.text) != 0: button_1.disabled = True
 
         GridLayout:

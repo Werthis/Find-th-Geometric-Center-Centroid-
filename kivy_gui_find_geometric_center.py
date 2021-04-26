@@ -24,6 +24,7 @@ class Invoice(Screen):
     dimentions_number = ObjectProperty(None)
     one_point_numbers = StringProperty()
     geometric_center = StringProperty()
+    button_text = StringProperty()
 
     def __init__(self, backend, *args, **kwargs):
         super(Invoice, self).__init__(*args, **kwargs)
@@ -33,6 +34,10 @@ class Invoice(Screen):
         self._list_of_all_coordinates = []
         self.number_of_points = 0
 
+    def change_button_text(self, state):
+        texts = {'normal' : 'Submit', 'pressed' : 'Put dimensions:'}
+        self.button_text = texts.get(state, '')
+    
     def get_number_of_dimentions(self):
         self.number_of_dimentions = self.dimentions_number.text
         return self.number_of_dimentions
@@ -48,7 +53,7 @@ class Invoice(Screen):
                 layout.add_widget(_text_input)
         except:
             pass
-        button_1 = self.ids['button_1']
+        # button_1 = self.ids['button_1']
         return self.number_of_dimentions
 
     def get_coordinates(self):
@@ -83,7 +88,9 @@ class GeometricCenterApp(App):
         self._backend = backend
 
     def build(self):
-        return Invoice(self._backend)
+        _app_ = Invoice(self._backend)
+        _app_.change_button_text('normal')
+        return _app_
 
     def start_app(self):
         GeometricCenterApp(self._backend).run()                

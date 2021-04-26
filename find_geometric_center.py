@@ -36,7 +36,6 @@ class GeometricCenter():
         if self._dimension == 0:
             self.check_number_of_dimensions()
         message_to_gui = self.find_geometric_center()
-        # self.geometric_center.clear()
         return message_to_gui
 
     def __str__(self):

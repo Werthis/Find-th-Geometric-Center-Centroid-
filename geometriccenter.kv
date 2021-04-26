@@ -14,10 +14,12 @@
     background_color: 1, 0.1, 1, 1
     color: 1, 1, 1, 0.8
             
-<TextInput>:
+<MyTextInput>:
     font_size: 30
     color: 0, 1, 1, 0
     background_color: (0.5, 0.3, 1, 1) if self.focus else (0.8, 0.3, 1, 1)
+    on_text: root.update_padding(args[0])
+    padding_x: self.width/2 
 
 <Invoice>:
 
@@ -36,15 +38,13 @@
                     id: label_1
                     text: 'How many dimensions do you need?'
                 
-                TextInput:
+                MyTextInput:
                     multiline: False
                     id: dimentions_number
 
                 Button:
                     id: button_1
                     text: root.button_text
-                    size_hint_x: .05
-                    spacing_x: 30
                     on_press: root.add()
                     on_release: root.change_button_text('pressed')
                     on_release: if len(dimentions_number.text) != 0: button_1.disabled = True
@@ -78,7 +78,6 @@
                         id: button_3
                         text: 'Find geometric center'
                         on_press: root.request()
-
 
                     Label:
                         id: label_2

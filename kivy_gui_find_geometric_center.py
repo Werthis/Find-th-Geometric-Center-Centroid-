@@ -13,11 +13,19 @@ import find_geometric_center as find_geo
 class MyLabel(Label):
     pass
 
-class MyButton(Button):
+class Button(Button):
     pass
 
 class MyTextInput(TextInput):
-    pass
+
+    def update_padding(self, text_input, *args):
+        text_width = text_input._get_text_width(
+            text_input.text,
+            text_input.tab_width,
+            text_input._label_cached
+        )
+        text_input.padding_x = (text_input.width - text_width)/2
+
 
 class Invoice(Screen):
 
@@ -34,6 +42,7 @@ class Invoice(Screen):
         self._list_of_all_coordinates = []
         self.number_of_points = 0
 
+
     def change_button_text(self, state):
         texts = {'normal' : 'Submit', 'pressed' : 'Put dimensions:'}
         self.button_text = texts.get(state, '')
@@ -48,12 +57,11 @@ class Invoice(Screen):
             self.number_of_dimentions = int(self.number_of_dimentions)
             layout = self.ids['dimensions']
             for i in range(self.number_of_dimentions):
-                _text_input = TextInput(text='', multiline=False)
+                _text_input = MyTextInput(text='', multiline=False)
                 self._list_of_textinputs.append(_text_input)
                 layout.add_widget(_text_input)
         except:
             pass
-        # button_1 = self.ids['button_1']
         return self.number_of_dimentions
 
     def get_coordinates(self):

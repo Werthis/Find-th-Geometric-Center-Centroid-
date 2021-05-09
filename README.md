@@ -4,5 +4,5 @@
 
 ### There is main file
 ### Test file in Unittest 
-### Gui files: Kivy and Tkinter
+### Gui files: Tkinter and Kivy + .kv file
 

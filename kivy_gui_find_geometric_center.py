@@ -10,12 +10,6 @@ from kivy.properties import StringProperty, ObjectProperty
 
 import find_geometric_center as find_geo
 
-class MyLabel(Label):
-    pass
-
-class Button(Button):
-    pass
-
 class MyTextInput(TextInput):
 
     def update_padding(self, text_input, *args):
@@ -44,7 +38,7 @@ class Invoice(Screen):
 
 
     def change_button_text(self, state):
-        texts = {'normal' : 'Submit', 'pressed' : 'Put dimensions:'}
+        texts = {'normal' : 'Submit', 'pressed' : 'Put coordinates:'}
         self.button_text = texts.get(state, '')
     
     def get_number_of_dimentions(self):

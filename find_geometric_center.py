@@ -50,10 +50,10 @@ if __name__ == "__main__":
     def add_point(number_of_dimentions):
         single_point = []
         for i in range(number_of_dimentions):
-            user_input = input(f'Put point N {i+1}: ')
+            user_input = input(f'Put coordinate N {i+1}: ')
             single_point.append(int(user_input))
         list_of_points.append(single_point)
-        print(f'\nYour list is: {list_of_points}\n')
+        print(f'\nList of points is: {list_of_points}\n')
 
     while submit != 'n' or submit != 'N':
         add_point(number_of_dimentions)

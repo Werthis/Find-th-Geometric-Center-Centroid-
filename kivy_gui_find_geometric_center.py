@@ -10,6 +10,7 @@ from kivy.properties import StringProperty, ObjectProperty
 
 import find_geometric_center as find_geo
 
+
 class MyTextInput(TextInput):
 
     def update_padding(self, text_input, *args):
